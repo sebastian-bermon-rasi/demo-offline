@@ -2,11 +2,13 @@
 package com.rasi.med.paciente;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
+import java.time.Instant;
 import java.time.OffsetDateTime;
 import java.util.UUID;
 
@@ -15,6 +17,7 @@ import java.util.UUID;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class Paciente {
 
     @Id
@@ -41,10 +44,23 @@ public class Paciente {
     @Column(name = "email", length = 150)
     private String email;
 
+    @Version
+    private Integer version;
+
     @Column(name = "updated_at", columnDefinition = "timestamptz")
     private OffsetDateTime updatedAt;
 
-    @Column(name = "deleted_at", columnDefinition = "timestamptz")
-    private OffsetDateTime deletedAt;
+    private String updatedBy;
 
+    @Column(name = "branch_id", nullable = false)
+    private String branchId;
+
+    @Column(name = "deleted", nullable = false)
+    private boolean deleted;
+
+    @PrePersist @PreUpdate
+    public void touch() {
+        if (updatedAt == null) updatedAt = OffsetDateTime.now();
+        else updatedAt = OffsetDateTime.now();
+    }
 }

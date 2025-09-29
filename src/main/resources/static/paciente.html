@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8"/>
+    <title>Pacientes</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body{font-family:system-ui,Arial;margin:2rem}
+        table{border-collapse:collapse;width:100%}
+        td,th{border:1px solid #ccc;padding:.4rem}
+        .row{display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:1rem}
+        input{padding:.3rem}
+        .offline-banner{position:fixed;left:0;right:0;top:0;background:#222;color:#fff;
+            padding:.5rem 1rem;text-align:center;display:none}
+        html.offline .offline-banner{display:block}
+    </style>
+</head>
+<body>
+<div class="offline-banner">Estás en modo offline. (En el siguiente paso, añadimos IndexedDB/outbox)</div>
+<h1>Pacientes</h1>
+<p><a href="/index.html">⬅ Volver</a></p>
+
+<div class="row">
+    <form id="formPaciente">
+        <input id="tipoDoc" placeholder="Tipo Doc" value="CC" required>
+        <input id="numDoc" placeholder="Documento" required>
+        <input id="nombre" placeholder="Nombre" required>
+        <input id="apellidos" placeholder="Apellidos">
+        <button type="submit">Crear</button>
+    </form>
+</div>
+
+<h2>Listado</h2>
+<table id="tblPacientes">
+    <thead>
+    <tr><th>Tipo Documento</th><th>Documento</th><th>Nombre</th><th>Apellidos</th></tr>
+    </thead>
+    <tbody></tbody>
+</table>
+
+<script src="https://unpkg.com/dexie@3.2.4/dist/dexie.min.js"></script>
+<script src="/db.js"></script>
+<script src="/sync.js"></script>
+
+<script src="/app.js"></script>
+<!--<script>-->
+<!--    window.addEventListener('online', ()=> document.documentElement.classList.remove('offline'));-->
+<!--    window.addEventListener('offline',()=> document.documentElement.classList.add('offline'));-->
+<!--    if (!navigator.onLine) document.documentElement.classList.add('offline');-->
+<!--</script>-->
+</body>
+</html>
